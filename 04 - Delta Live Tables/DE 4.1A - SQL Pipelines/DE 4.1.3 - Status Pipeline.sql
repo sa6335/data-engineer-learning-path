@@ -12,7 +12,7 @@
 -- MAGIC 
 -- MAGIC Now that we've gone through the process of configuring and running a pipeline with 2 notebooks, we'll simulate developing and adding a 3rd notebook.
 -- MAGIC 
--- MAGIC **DON'T PANIC!**
+-- MAGIC **DON'T PANIC!** Things are about to break.
 -- MAGIC 
 -- MAGIC The code provided below contains some intentional, small syntax errors. By troubleshooting these errors, you'll learn how to iteratively develop DLT code and identify errors in your syntax.
 -- MAGIC 
@@ -57,7 +57,7 @@
 -- COMMAND ----------
 
 -- TODO
-CREATE OR REFRESH STREAMING LIVE TABLE status_bronze
+CREATE OR REFRESH STREAMING TABLE status_bronze
 AS SELECT current_timestamp() processing_time, input_file_name() source_file, *
 FROM cloud_files("${source}/status", "json");
 
@@ -69,7 +69,7 @@ FROM LIVE.status_bronze;
 CREATE OR REFRESH LIVE TABLE email_updates
 AS SELECT a.*, b.email
 FROM status_silver a
-INNER JOIN LIVE.subscribed_order_emails_v b
+INNER JOIN subscribed_order_emails_v b
 ON a.order_id = b.order_id;
 
 -- COMMAND ----------
@@ -101,7 +101,7 @@ ON a.order_id = b.order_id;
 -- COMMAND ----------
 
 -- MAGIC %md-sandbox
--- MAGIC &copy; 2022 Databricks, Inc. All rights reserved.<br/>
+-- MAGIC &copy; 2023 Databricks, Inc. All rights reserved.<br/>
 -- MAGIC Apache, Apache Spark, Spark and the Spark logo are trademarks of the <a href="https://www.apache.org/">Apache Software Foundation</a>.<br/>
 -- MAGIC <br/>
 -- MAGIC <a href="https://databricks.com/privacy-policy">Privacy Policy</a> | <a href="https://databricks.com/terms-of-use">Terms of Use</a> | <a href="https://help.databricks.com/">Support</a>
